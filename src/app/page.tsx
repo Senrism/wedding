@@ -16,15 +16,37 @@ export default function Home() {
       setIsVisible(false); // benar-benar hilang dari DOM
       audioRef.current?.play(); // play audio setelah hilang
     }, 500); // waktu sama dengan transition duration
+
+    setTimeout(() => {
+      scrollVerySlowlyToBottom(); // scroll ke bawah setelah fade-out selesai
+    }
+    , 1000); // tunggu 1 detik sebelum scroll
   };
 
   const handlePlay = () => {
     audioRef.current?.play();
   };
 
+  const scrollVerySlowlyToBottom = () => {
+    const target = document.body.scrollHeight;
+    const step = 0.4; // pixels per frame — smaller = slower
+  
+    let scroll = window.scrollY;
+  
+    const animate = () => {
+      if (scroll < target) {
+        scroll += step;
+        window.scrollTo(0, scroll);
+        requestAnimationFrame(animate);
+      }
+    };
+  
+    animate();
+  };
+
   return (
     <div>
-      <audio ref={audioRef} src="/bg-music.mp3" loop autoPlay onPlay={handlePlay} className="hidden">
+      <audio ref={audioRef} src="/bg-music-2.mp3" loop autoPlay onPlay={handlePlay} className="hidden">
       </audio>
       {isVisible && (
         <div
