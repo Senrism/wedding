@@ -49,13 +49,13 @@ export default function Home() {
           The Wedding Of
         </h2>
         <div>
-          <h1 style={{ fontFamily: 'Playwrite HU', fontSize: '50px', color: 'white', fontWeight: 'bold' }} className="text-center mt-[100px]">
+          <h1 style={{ fontFamily: 'Parisienne', fontSize: '50px', color: 'white', fontWeight: 'bold' }} className="text-center mt-[100px]">
             Kharisma
           </h1>
-          <h1 style={{ fontFamily: 'Playwrite HU', fontSize: '50px', color: 'white', fontWeight: 'bold' }} className="text-center">
+          <h1 style={{ fontFamily: 'Parisienne', fontSize: '50px', color: 'white', fontWeight: 'bold' }} className="text-center">
               &
           </h1>
-          <h1 style={{ fontFamily: 'Playwrite HU', fontSize: '50px', color: 'white', fontWeight: 'bold' }} className="text-center">
+          <h1 style={{ fontFamily: 'Parisienne', fontSize: '50px', color: 'white', fontWeight: 'bold' }} className="text-center">
             Febry Lasena
           </h1>
         </div>
