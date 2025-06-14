@@ -10,17 +10,65 @@ export default function Home() {
   const [isVisible, setIsVisible] = useState(true);
   const [isHiding, setIsHiding] = useState(false);
 
+  let messages = [
+    {
+      sender : 'sender 1',
+      message : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem fugiat veritatis quibusdam non accusamus repudiandae at itaque aliquid quaerat amet iste laudantium illum reprehenderit rerum, assumenda veniam unde molestiae explicabo!'
+    },
+    {
+      sender : 'sender 2',
+      message : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem fugiat veritatis quibusdam non accusamus repudiandae at itaque aliquid quaerat amet iste laudantium illum reprehenderit rerum, assumenda veniam unde molestiae explicabo!'
+    },
+    {
+      sender : 'sender 3',
+      message : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem fugiat veritatis quibusdam non accusamus repudiandae at itaque aliquid quaerat amet iste laudantium illum reprehenderit rerum, assumenda veniam unde molestiae explicabo!'
+    },
+    {
+      sender : 'sender 4',
+      message : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem fugiat veritatis quibusdam non accusamus repudiandae at itaque aliquid quaerat amet iste laudantium illum reprehenderit rerum, assumenda veniam unde molestiae explicabo!'
+    },
+    {
+      sender : 'sender 5',
+      message : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem fugiat veritatis quibusdam non accusamus repudiandae at itaque aliquid quaerat amet iste laudantium illum reprehenderit rerum, assumenda veniam unde molestiae explicabo!'
+    },
+  ]
+
   const handleOpen = () => {
     setIsHiding(true); // mulai fade-out
     setTimeout(() => {
       setIsVisible(false); // benar-benar hilang dari DOM
-      audioRef.current?.play(); // play audio setelah hilang
+      // audioRef.current?.play(); // play audio setelah hilang
     }, 500); // waktu sama dengan transition duration
   };
 
   const handlePlay = () => {
     audioRef.current?.play();
   };
+
+  const divRef = useRef<HTMLDivElement | null>(null);
+  const scrollAmount = useRef(0);
+
+  useEffect(() => {
+    let animationFrameId:number;
+    function slowScroll() {
+      if (!divRef.current) return;
+
+      scrollAmount.current += 0.5; // Adjust scroll speed here
+      const maxScroll = divRef.current.scrollHeight - divRef.current.clientHeight;
+
+      if (scrollAmount.current > maxScroll) {
+        scrollAmount.current = 0; // Reset to top when bottom is reached
+      }
+
+      divRef.current.scrollTop = scrollAmount.current;
+
+      animationFrameId = requestAnimationFrame(slowScroll)
+    }
+     
+    animationFrameId = requestAnimationFrame(slowScroll);
+    return () => cancelAnimationFrame(animationFrameId);
+
+  }, []);
 
   return (
     <div>
@@ -113,7 +161,25 @@ export default function Home() {
         </iframe>
 
       </div>
-      
+
+      <div className="flex flex-col items-center h-screen bg-gradient-to-b from-[#c2f0ea] via-[#d3d3d3] to-[#f8cfd8] px-6">
+        <div className="bg-white h-[300px] w-[100%] mt-[20px] rounded-xl px-2 overflow-y-scroll scrollable-div no-scrollbar" ref={divRef}>
+          {messages.map((message, index) => (
+            <div className="w-[100%] border-b-2 py-4" key={index}>
+              <div className="w-[100%]">
+                <span>
+                  {message.sender}
+                </span>
+              </div>
+              <div className="w-[100%] py-2">
+                <span>
+                  {message.message}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
