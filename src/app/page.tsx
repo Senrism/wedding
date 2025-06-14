@@ -37,7 +37,7 @@ export default function Home() {
     setIsHiding(true); // mulai fade-out
     setTimeout(() => {
       setIsVisible(false); // benar-benar hilang dari DOM
-      // audioRef.current?.play(); // play audio setelah hilang
+      audioRef.current?.play(); // play audio setelah hilang
     }, 500); // waktu sama dengan transition duration
   };
 
