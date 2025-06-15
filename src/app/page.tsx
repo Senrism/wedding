@@ -2,16 +2,19 @@
 import Image from "next/image";
 import './style.css';
 import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 export default function Home() {
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isVisible, setIsVisible] = useState(true);
   const [isHiding, setIsHiding] = useState(false);
+  const [to, setTo] = useState<string | null>(null)
 
-  const searchParams = useSearchParams();
-  const to = searchParams.get('to');
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const toParam = params.get('to')
+    setTo(toParam)
+  })
 
   let messages = [
     {
@@ -44,9 +47,6 @@ export default function Home() {
       const video = videoRef.current
       if (video) {
         video.play(); // play video setelah fade-out selesai
-        // const handleEnded = () => setShowContent(true)
-        // video.addEventListener('ended', handleEnded)
-        // return () => video.removeEventListener('ended', handleEnded)
       }
       // audioRef.current?.play(); // play audio setelah hilang
     }, 500); // waktu sama dengan transition duration
